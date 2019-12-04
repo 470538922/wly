@@ -18,7 +18,7 @@
         <el-table-column prop="realVolume" label="有效容积L" min-width="100" align="center"></el-table-column>
         <el-table-column prop="height" label="液位高度mm" min-width="120" align="center"></el-table-column>
         <el-table-column prop="temperature" label="温度℃" min-width="90" align="center"></el-table-column>
-        <el-table-column prop="address" label="倾斜度°" min-width="90" align="center"></el-table-column>
+        <el-table-column prop="jiaodu" label="倾斜度°" min-width="90" align="center"></el-table-column>
         <el-table-column prop="nowVolume" label="当前容积L" min-width="120" align="center"></el-table-column>
       </el-table>
     </el-row>

@@ -77,7 +77,7 @@
                         type="number"
                         placeholder
                         :readonly="jiutan==''||jiutan==null"
-                        v-model="qingxiedu"
+                        v-model="angle"
                         style="width: 104px;"
                       >
                         <template slot="append">°</template>
@@ -159,7 +159,7 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      qingxiedu: null,
+      angle: null,
       showDetails: "1",
       dialogVisible: false,
       realVolume: "",
@@ -218,7 +218,9 @@ export default {
               "/jiutan/getHeight?jiutanId=" +
               this.jiutan +
               "&height=" +
-              this.yeweigaocha
+              this.yeweigaocha +
+              "&angle=" +
+              this.angle
           )
           .then(result => {
             if (result.data.code === 200) {
