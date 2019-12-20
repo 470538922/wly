@@ -159,7 +159,7 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      angle: null,
+      angle: "",
       showDetails: "1",
       dialogVisible: false,
       realVolume: "",
@@ -207,7 +207,7 @@ export default {
     },
     getheight() {
       if (
-        /(^[1-9]{1}[0-9]*$)|(^[0-9]*\.[0-9]{2}$)/.test(this.yeweigaocha) ==
+        /(^[1-9]{1}[0-9]*$)|(^[0-9]*\.[0-9]{1,2}$)/.test(this.yeweigaocha) ==
         false
       ) {
         this.$message.error(`液位高差必须大于0，且只能保留两位小数！`);
@@ -220,7 +220,7 @@ export default {
               "&height=" +
               this.yeweigaocha +
               "&angle=" +
-              this.angle
+              (this.angle != "" && this.angle != null ? this.angle : 0)
           )
           .then(result => {
             if (result.data.code === 200) {
