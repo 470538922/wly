@@ -115,6 +115,12 @@
                   :visible.sync="dialogVisible"
                   width="600px"
                 >
+                  <el-button
+                    type="primary"
+                    class="remove"
+                    size="small"
+                    @click="removeHistory"
+                  >清除历史记录</el-button>
                   <div id="main" style="width:580px;;height:300px;"></div>
                 </el-dialog>
               </el-form>
@@ -174,6 +180,19 @@ export default {
     };
   },
   methods: {
+    removeHistory() {
+      this.$axios
+        .get(this.global + "/history/clear?jiutanId=" + this.jiutan)
+        .then(result => {
+          if (result.data.code === 200) {
+            this.$message.success("清除成功！");
+            this.getHistory();
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     changeShow() {
       this.showDetails = 1;
     },
@@ -407,5 +426,10 @@ input[type="number"] {
 }
 .el-dialog__body {
   padding-top: 0;
+}
+.remove {
+  position: absolute;
+  z-index: 100000;
+  right: 10px;
 }
 </style>

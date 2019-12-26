@@ -62,7 +62,11 @@ export default {
           tooltip: {},
 
           xAxis: {
-            data: xData
+            data: xData,
+            axisLabel: {
+              interval: 0,
+              rotate: xData.length > 9 ? 45 : 0 //倾斜度 -90 至 90 默认为0
+            }
           },
           yAxis: {},
           series: [

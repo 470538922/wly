@@ -11,6 +11,7 @@ import echarts from 'echarts'
 
 Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios
+axios.defaults.timeout = 5000;
 // Vue.prototype.global = "http://119.3.255.22:8041";
 // Vue.prototype.global = "http://192.168.1.182:8041";
 Vue.prototype.global = "http://127.0.0.1:8041";
