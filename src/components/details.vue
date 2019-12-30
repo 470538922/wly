@@ -30,6 +30,7 @@
       :visible.sync="dialogVisible"
       width="600px"
     >
+      <el-button class="remove" type="primary" size="small" @click="exportHistoryExcel">导出Excel</el-button>
       <div id="main1" style="width:580px;;height:300px;"></div>
     </el-dialog>
   </div>
@@ -49,6 +50,34 @@ export default {
     };
   },
   methods: {
+    exportHistoryExcel() {
+      let nowTime = new Date().toLocaleString("chinese", { hour12: false });
+      this.$axios
+        .post(this.global + "/history/exportExcel", this.data, {
+          responseType: "blob", // 设置响应数据类型
+          headers: { "Content-Type": "application/json" }
+        })
+        .then(res => {
+          if (res.status == 200) {
+            console.log(res);
+            var blob = new Blob([res.data], {
+              type:
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+            });
+            var downloadElement = document.createElement("a");
+            var href = window.URL.createObjectURL(blob); //创建下载的链接
+            downloadElement.href = href;
+            // let fileName = this.options.find(item => item.id == this.jiutan)
+            //   .name;
+            downloadElement.download =
+              "五粮液酒坛酒量统计 " + nowTime + ".xlsx"; //下载后文件名
+            document.body.appendChild(downloadElement);
+            downloadElement.click(); //点击下载
+            document.body.removeChild(downloadElement); //下载完成移除元素
+            window.URL.revokeObjectURL(href); //释放掉blob对象
+          }
+        });
+    },
     bijiao() {
       this.dialogVisible = true;
       this.$nextTick(() => {

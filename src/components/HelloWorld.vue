@@ -115,12 +115,11 @@
                   :visible.sync="dialogVisible"
                   width="600px"
                 >
-                  <el-button
-                    type="primary"
-                    class="remove"
-                    size="small"
-                    @click="removeHistory"
-                  >清除历史记录</el-button>
+                  <div class="remove">
+                    <el-button type="primary" size="small" @click="removeHistory">清除历史记录</el-button>
+                    <el-button type="primary" size="small" @click="exportHistoryExcel">导出Excel</el-button>
+                  </div>
+
                   <div id="main" style="width:580px;;height:300px;"></div>
                 </el-dialog>
               </el-form>
@@ -180,6 +179,42 @@ export default {
     };
   },
   methods: {
+    exportHistoryExcel() {
+      let nowTime = new Date().toLocaleString("chinese", { hour12: false });
+      let qs = require("qs");
+      let value = qs.stringify({
+        id: this.jiutan
+      });
+      this.$axios
+        .post(
+          this.global + "/history/exportHistoryExcel?id=" + this.jiutan,
+          {},
+          {
+            responseType: "blob", // 设置响应数据类型
+            headers: { "Content-Type": "application/json" }
+          }
+        )
+        .then(res => {
+          if (res.status == 200) {
+            console.log(res);
+            var blob = new Blob([res.data], {
+              type:
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+            });
+            var downloadElement = document.createElement("a");
+            var href = window.URL.createObjectURL(blob); //创建下载的链接
+            downloadElement.href = href;
+            let fileName = this.options.find(item => item.id == this.jiutan)
+              .name;
+            downloadElement.download =
+              fileName + "历史数据" + nowTime + ".xlsx"; //下载后文件名
+            document.body.appendChild(downloadElement);
+            downloadElement.click(); //点击下载
+            document.body.removeChild(downloadElement); //下载完成移除元素
+            window.URL.revokeObjectURL(href); //释放掉blob对象
+          }
+        });
+    },
     removeHistory() {
       this.$axios
         .get(this.global + "/history/clear?jiutanId=" + this.jiutan)

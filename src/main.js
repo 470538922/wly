@@ -3,18 +3,18 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import ElementUI from './companyImport'
+
 import axios from 'axios'
 import echarts from 'echarts'
 
 
 Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 50000;
 // Vue.prototype.global = "http://119.3.255.22:8041";
-// Vue.prototype.global = "http://192.168.1.182:8041";
-Vue.prototype.global = "http://127.0.0.1:8041";
+Vue.prototype.global = "http://192.168.1.182:8041";
+// Vue.prototype.global = "http://127.0.0.1:8041";
 
 Vue.config.productionTip = false
 
